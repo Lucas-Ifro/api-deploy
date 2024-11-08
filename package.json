@@ -11,7 +11,7 @@
     "vercel-build": "npx prisma db pull && npx prisma generate && npx prisma validate",
     "build": "npx prisma db pull && npx prisma generate && npx prisma validate",
     "seed": "node ./sql/seed.js",
-    "start": "nodemon src/app.js",
+    "start": "nodemon server.js",
     "kill3051": "sudo kill -9 $(sudo lsof -t -i:3051)"
   },
   "author": "",
