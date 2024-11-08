@@ -5,13 +5,12 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "prisma": "npx prisma db pull && npx prisma generate",
-    "build": "prisma generate && next build",
+    "vercel-build": "npx prisma db pull && npx prisma generate && npx prisma validate",
     "test": "jest",
     "test:watch": "jest --watchAll",
     "coverage": "jest --coverage",
     "seed": "node ./sql/seed.js",
-    "start": "nodemon server.js",
+    "dev": "nodemon server.js",
     "kill3051": "sudo kill -9 $(sudo lsof -t -i:3051)"
   },
   "author": "",
