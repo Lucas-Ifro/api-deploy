@@ -4,13 +4,16 @@
   "description": "##README 1. O README.md criado com sucesso; 2. [Link para códigos do README.MD](https://raullesteves.medium.com/github-como-fazer-um-readme-md-bonit%C3%A3o-c85c8f154f8);",
   "main": "index.js",
   "type": "module",
+  "engines":{
+    "node":"20.x"
+  }
   "scripts": {
     "vercel-build": "npx prisma db pull && npx prisma generate && npx prisma validate",
     "test": "jest",
     "test:watch": "jest --watchAll",
     "coverage": "jest --coverage",
     "seed": "node ./sql/seed.js",
-    "dev": "nodemon src/app.js",
+    "start": "nodemon server.js",
     "kill3051": "sudo kill -9 $(sudo lsof -t -i:3051)"
   },
   "author": "",
