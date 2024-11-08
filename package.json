@@ -9,6 +9,7 @@
   },
   "scripts": {
     "vercel-build": "npx prisma db pull && npx prisma generate && npx prisma validate",
+    "build": "npx prisma db pull && npx prisma generate && npx prisma validate",
     "test": "jest",
     "test:watch": "jest --watchAll",
     "coverage": "jest --coverage",
