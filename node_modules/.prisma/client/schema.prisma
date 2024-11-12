@@ -1,0 +1,126 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model aluno {
+  id         Int     @unique(map: "id") @default(autoincrement())
+  usuario_id Int
+  turma_id   Int
+  turma      turma   @relation(fields: [turma_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_aluno_turma1")
+  usuario    usuario @relation(fields: [usuario_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_aluno_usuario1")
+  feito      feito[]
+
+  @@id([id, usuario_id, turma_id])
+  @@index([turma_id], map: "fk_aluno_turma1_idx")
+  @@index([usuario_id], map: "fk_aluno_usuario1_idx")
+}
+
+model aula {
+  id            Int     @unique(map: "id") @default(autoincrement())
+  modulo_id     Int
+  titulo        String? @db.VarChar(100)
+  video         String  @db.VarChar(240)
+  pdf_questoes  String? @db.VarChar(200)
+  pdf_resolucao String? @db.VarChar(200)
+  descricao     String? @db.Text
+  modulo        modulo  @relation(fields: [modulo_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_aula_modulo1")
+  feito         feito[]
+
+  @@id([id, modulo_id])
+  @@index([modulo_id], map: "fk_aula_modulo1_idx")
+}
+
+model feito {
+  id       Int      @id @unique(map: "id") @default(autoincrement())
+  feito    Boolean?
+  revisar  Boolean?
+  aula_id  Int
+  aluno_id Int
+  aluno    aluno    @relation(fields: [aluno_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_feito_aluno1")
+  aula     aula     @relation(fields: [aula_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_feito_aula1")
+
+  @@index([aluno_id], map: "fk_feito_aluno1_idx")
+  @@index([aula_id], map: "fk_feito_aula1_idx")
+}
+
+model grupo {
+  id         Int          @id @unique(map: "id") @default(autoincrement())
+  nome       String       @db.VarChar(45)
+  permissoes permissoes[]
+  usuario    usuario[]
+}
+
+model modulo {
+  id        Int     @unique(map: "id") @default(autoincrement())
+  turma_id  Int
+  titulo    String  @db.VarChar(100)
+  image     String? @db.VarChar(200)
+  descricao String? @db.Text
+  aula      aula[]
+  turma     turma   @relation(fields: [turma_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_modulo_turma")
+
+  @@id([id, turma_id])
+  @@index([turma_id], map: "fk_modulo_turma_idx")
+}
+
+model permissoes {
+  rota_id  Int
+  grupo_id Int
+  grupo    grupo @relation(fields: [grupo_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_permissoes_grupo1")
+  rota     rota  @relation(fields: [rota_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_permissoes_rota1")
+
+  @@id([rota_id, grupo_id])
+  @@index([grupo_id], map: "fk_permissoes_grupo1_idx")
+  @@index([rota_id], map: "fk_permissoes_rota1_idx")
+}
+
+model professor {
+  id         Int     @unique(map: "id") @default(autoincrement())
+  turma_id   Int
+  usuario_id Int
+  turma      turma   @relation(fields: [turma_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_professor_turma1")
+  usuario    usuario @relation(fields: [usuario_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_professor_usuario1")
+
+  @@id([id, turma_id, usuario_id])
+  @@index([turma_id], map: "fk_professor_turma1_idx")
+  @@index([usuario_id], map: "fk_professor_usuario1_idx")
+}
+
+model rota {
+  id         Int          @id @unique(map: "id") @default(autoincrement())
+  rota       String       @db.VarChar(45)
+  get        Boolean
+  post       Boolean
+  patch      Boolean
+  put        Boolean
+  delete     Boolean
+  permissoes permissoes[]
+}
+
+model turma {
+  id        Int         @id @unique(map: "id") @default(autoincrement())
+  nome      String      @db.VarChar(45)
+  aluno     aluno[]
+  modulo    modulo[]
+  professor professor[]
+}
+
+model usuario {
+  id        Int         @unique(map: "id") @default(autoincrement())
+  nome      String      @db.VarChar(100)
+  grupo_id  Int
+  senha     String      @db.VarChar(240)
+  matricula String      @unique(map: "matricula") @db.VarChar(20)
+  active    Boolean
+  aluno     aluno[]
+  professor professor[]
+  grupo     grupo       @relation(fields: [grupo_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_usuario_grupo1")
+
+  @@id([id, grupo_id])
+  @@index([grupo_id], map: "fk_usuario_grupo1_idx")
+}
