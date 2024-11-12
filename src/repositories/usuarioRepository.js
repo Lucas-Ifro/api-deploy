@@ -1,6 +1,6 @@
 import { number } from "zod";
 import {prisma} from "../configs/prismaClient.js";
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 
 class usuarioRepository {
