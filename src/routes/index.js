@@ -11,13 +11,20 @@ import getSwaggerOptions from "../docs/config/head.js";
 
 const routes = (app) => {
 
-
-    // Configurando a documentação da Swagger UI para ser servida diretamente em '/'
-    const swaggerDocs = swaggerJsDoc(getSwaggerOptions());
-    app.use(swaggerUI.serve);
-    app.get("/docs", (req, res, next) => {
-        swaggerUI.setup(swaggerDocs)(req, res, next);
+    app.get("/", (req, res) => {
+        res.status(200).redirect("/docs"); 
     });
+
+    app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerJsDoc(getSwaggerOptions()), {
+        customCssUrl: [
+            "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui.min.css"
+          ],
+          customJsUrl: [
+            "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui-bundle.js",
+            "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui-standalone-preset.js"
+          ],
+        customSiteTitle: "API plataforma de Matematica", // Personalizando o título da página de documentação
+    }));
 
     app.use(imagens);
 

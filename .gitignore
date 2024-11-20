@@ -2,4 +2,4 @@ data
 coverage
 .vscode
 .vercel
-.node_modulos
+/node_modules
