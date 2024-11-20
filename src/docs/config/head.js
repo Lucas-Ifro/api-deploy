@@ -14,7 +14,7 @@ import aulaSchema from "../schemas/aulaSchemaDoc.js";
 // Função para definir as URLs do servidor dependendo do ambiente
 const getServersInCorrectOrder = () => {
     const devUrl = { url: "http://localhost:3051" };
-    const prodUrl = { url: "http://localhost:3051" };
+    const prodUrl = { url: "https://api-deploy-two.vercel.app/"  };
 
     if (process.env.NODE_ENV === "production") return [prodUrl, devUrl];
     else return [devUrl, prodUrl];
