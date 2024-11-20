@@ -1,5 +1,4 @@
 import express from "express";
-import imagens from "./ImagensRoute.js"
 import users from "./UsuarioRoutes.js";
 import login from "./loginRoute.js";
 import turma from "./TurmaRoutes.js";
@@ -26,9 +25,9 @@ const routes = (app) => {
         customSiteTitle: "API plataforma de Matematica", // Personalizando o título da página de documentação
     }));
 
-    app.use(imagens);
-
-    app.use(express.json(),
+    app.use(
+        express.json(),
+        express.text(),
         // rotas para autentição e autorização (permissão)
         login,
         turma,
