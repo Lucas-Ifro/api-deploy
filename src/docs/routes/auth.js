@@ -10,7 +10,7 @@ const loginRoutes = {
                             type: "object",
                             properties: {
                                 matricula: {
-                                    type: "integer",
+                                    type: "string",
                                     description: "Matricula do usuário.",
                                     example: "12345"
                                 },
