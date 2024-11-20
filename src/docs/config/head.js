@@ -26,9 +26,9 @@ const getSwaggerOptions = () => {
         swaggerDefinition: {
             openapi: "3.0.0",
             info: {
-                title: "API AUTH SGBD",
+                title: "API Plataforma de Matematica",
                 version: "1.0-alpha",
-                description: "API AUTH SGBD\n\nÉ necessário autenticar com token JWT antes de utilizar a maioria das rotas, faça isso na rota /login com uma matricula e senha válidas.",
+                description: "Plataforma de Matematica",
             },
             servers: getServersInCorrectOrder(),
             tags: [
