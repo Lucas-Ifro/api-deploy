@@ -15,7 +15,7 @@ const routes = (app) => {
     // Configurando a documentação da Swagger UI para ser servida diretamente em '/'
     const swaggerDocs = swaggerJsDoc(getSwaggerOptions());
     app.use(swaggerUI.serve);
-    app.get("/", (req, res, next) => {
+    app.get("/docs", (req, res, next) => {
         swaggerUI.setup(swaggerDocs)(req, res, next);
     });
 
